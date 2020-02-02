@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Save User Data | @Dunfred</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mdb.min.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">    
+</head>
+<body>
+    <div class="container">
+        <h1 align="center">Users Record </h1>    
+
+        <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <h2 align="center">Add User</h2><br/>
+                <form method="POST" action="{% url 'create' %}">
+                    {% csrf_token %}                
+                    {{ form.as_p }}
+                    <button class="btn btn-primary form-control" type="submit">SUBMIT</button>                    
+                </form>            
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <table id="usersTable" class="table table-md table-striped table-hover table-bordered table-responsive-md">
+                    <thead>
+                        <tr>                        
+                            <th>Username</th>
+                            <th>Password</th>                       
+                            <th>Email</th>                        
+                        </tr>
+                    </thead>
+                    {% if users %}
+                    {% for user in users %}
+                    <tbody>
+                        <tr id="user-{{user.id}}">
+                            <td>{{user.username}}</td>
+                            <td>{{user.password}}</td>                        
+                            <td>{{user.email}}</td>                                                  
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                    <span class="blockquote"> No User Data Found </span>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}" ></script>
+<script src="{% static 'js/bootstrap.min.js' %}" ></script>
+<script src="{% static 'js/popper.min.js' %}" ></script>    
+{% block js %}
+{% endblock js %}
+</html>
